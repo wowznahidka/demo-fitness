@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>APEX — Твій перший крок до результату</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent:   #c8f135;
+      --black:    #0a0a0a;
+      --black2:   #111111;
+      --gray:     #1a1a1a;
+      --gray2:    #232323;
+      --white:    #ffffff;
+      --muted:    #888888;
+      --ff-head:  'Bebas Neue', sans-serif;
+      --ff-body:  'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--ff-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    img { display: block; width: 100%; object-fit: cover; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ===== UTILITIES ===== */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-label {
+      font-family: var(--ff-body);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 36px;
+      border-radius: 4px;
+      font-family: var(--ff-head);
+      font-size: 20px;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+      border: none;
+      text-transform: uppercase;
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: var(--black);
+    }
+    .btn-accent:hover { background: #d8ff45; transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid var(--white);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      padding: 18px 0;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200,241,53,0.08);
+    }
+
+    .navbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: var(--ff-head);
+      font-size: 32px;
+      letter-spacing: 0.08em;
+      color: var(--white);
+    }
+    .logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: var(--black);
+      padding: 10px 24px;
+      border-radius: 3px;
+      font-family: var(--ff-head);
+      font-size: 17px;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover { background: #d8ff45; transform: translateY(-1px); }
+
+    /* Hide nav links on mobile */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 80px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        rgba(10,10,10,0.92) 0%,
+        rgba(10,10,10,0.70) 50%,
+        rgba(10,10,10,0.30) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(200,241,53,0.12);
+      border: 1px solid rgba(200,241,53,0.3);
+      padding: 6px 16px;
+      border-radius: 2px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .hero-dot {
+      width: 7px; height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .hero-title {
+      font-family: var(--ff-head);
+      font-size: clamp(64px, 10vw, 130px);
+      line-height: 0.92;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .hero-title .accent { color: var(--accent); }
+
+    .hero-subtitle {
+      font-family: var(--ff-head);
+      font-size: clamp(28px, 4vw, 48px);
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      margin-bottom: 28px;
+    }
+
+    .hero-desc {
+      font-size: 17px;
+      color: rgba(255,255,255,0.7);
+      max-width: 500px;
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 64px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .stat-item { text-align: left; }
+
+    .stat-num {
+      font-family: var(--ff-head);
+      font-size: 48px;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ===== TICKER ===== */
+    .ticker-wrap {
+      background: var(--accent);
+      padding: 14px 0;
+      overflow: hidden;
+    }
+
+    .ticker-track {
+      display: flex;
+      gap: 0;
+      animation: ticker 28s linear infinite;
+      white-space: nowrap;
+    }
+
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .ticker-item {
+      font-family: var(--ff-head);
+      font-size: 20px;
+      letter-spacing: 0.1em;
+      color: var(--black);
+      padding: 0 32px;
+    }
+
+    .ticker-sep {
+      font-size: 20px;
+      color: rgba(10,10,10,0.4);
+      padding: 0 8px;
+    }
+
+    /* ===== SERVICES ===== */
+    .services {
+      padding: 120px 0;
+      background: var(--black2);
+    }
+
+    .section-head {
+      margin-bottom: 64px;
+    }
+
+    .section-title {
+      font-family: var(--ff-head);
+      font-size: clamp(48px, 7vw, 88px);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .section-title .dim { color: rgba(255,255,255,0.18); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2px;
+    }
+
+    .service-card {
+      position: relative;
+      background: var(--gray);
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .service-img {
+      height: 220px;
+      overflow: hidden;
+    }
+
+    .service-img img {
+      height: 100%;
+      transition: transform 0.5s ease;
+    }
+
+    .service-card:hover .service-img img { transform: scale(1.07); }
+
+    .service-body {
+      padding: 28px 28px 32px;
+    }
+
+    .service-num {
+      font-family: var(--ff-head);
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .service-name {
+      font-family: var(--ff-head);
+      font-size: 30px;
+      letter-spacing: 0.04em;
+      margin-bottom: 10px;
+    }
+
+    .service-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+
+    .service-price {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .price-val {
+      font-family: var(--ff-head);
+      font-size: 36px;
+      color: var(--accent);
+    }
+
+    .price-unit {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ===== SCHEDULE ===== */
+    .schedule {
+      padding: 120px 0;
+      background: var(--black);
+    }
+
+    .schedule-table-wrap {
+      overflow-x: auto;
+      margin-top: 48px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .schedule-table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+    }
+
+    .schedule-table thead tr {
+      background: var(--accent);
+    }
+
+    .schedule-table thead th {
+      font-family: var(--ff-head);
+      font-size: 17px;
+      letter-spacing: 0.08em;
+      color: var(--black);
+      padding: 16px 18px;
+      text-align: left;
+      font-weight: normal;
+    }
+
+    .schedule-table tbody tr {
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: background 0.2s;
+    }
+
+    .schedule-table tbody tr:hover { background: rgba(200,241,53,0.04); }
+
+    .schedule-table tbody td {
+      padding: 14px 18px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.8);
+      vertical-align: top;
+    }
+
+    .schedule-table tbody td:first-child {
+      font-family: var(--ff-head);
+      font-size: 18px;
+      letter-spacing: 0.06em;
+      color: var(--white);
+      white-space: nowrap;
+    }
+
+    .class-pill {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 2px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      margin: 2px 2px 2px 0;
+      white-space: nowrap;
+    }
+
+    .pill-crossfit { background: rgba(200,241,53,0.15); color: var(--accent); }
+    .pill-yoga     { background: rgba(139,92,246,0.18); color: #b59bff; }
+    .pill-stretch  { background: rgba(14,165,233,0.15); color: #7dd3fc; }
+    .pill-pt       { background: rgba(249,115,22,0.15); color: #fdba74; }
+    .pill-rest     { color: rgba(255,255,255,0.2); font-style: italic; }
+
+    /* ===== COACHES ===== */
+    .coaches {
+      padding: 120px 0;
+      background: var(--black2);
+    }
+
+    .coaches-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      margin-top: 64px;
+    }
+
+    .coach-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--gray2);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .coach-photo {
+      height: 380px;
+      overflow: hidden;
+    }
+
+    .coach-photo img {
+      height: 100%;
+      transition: transform 0.5s ease;
+    }
+
+    .coach-card:hover .coach-photo img { transform: scale(1.05); }
+
+    .coach-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 80px 28px 28px;
+      background: linear-gradient(to top, rgba(10,10,10,0.97) 0%, transparent 100%);
+    }
+
+    .coach-tag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .coach-name {
+      font-family: var(--ff-head);
+      font-size: 34px;
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+    }
+
+    .coach-bio {
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+    }
+
+    /* ===== PRICING ===== */
+    .pricing {
+      padding: 120px 0;
+      background: var(--black);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 64px;
+    }
+
+    .pricing-card {
+      background: var(--gray);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 4px;
+      padding: 40px 36px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+
+    .pricing-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: rgba(255,255,255,0.12);
+      transition: background 0.3s;
+    }
+
+    .pricing-card:hover { border-color: rgba(200,241,53,0.3); transform: translateY(-4px); }
+    .pricing-card:hover::before { background: var(--accent); }
+
+    .pricing-card.featured {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .pricing-card.featured::before { background: rgba(10,10,10,0.2); }
+    .pricing-card.featured:hover { transform: translateY(-4px); }
+
+    .pricing-badge {
+      display: inline-block;
+      background: var(--black);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 2px;
+      margin-bottom: 24px;
+    }
+
+    .pricing-card.featured .pricing-badge {
+      background: rgba(10,10,10,0.18);
+      color: var(--black);
+    }
+
+    .pricing-name {
+      font-family: var(--ff-head);
+      font-size: 28px;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+      color: var(--white);
+    }
+
+    .pricing-card.featured .pricing-name { color: var(--black); }
+
+    .pricing-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .pricing-card.featured .pricing-sub { color: rgba(10,10,10,0.55); }
+
+    .pricing-price {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 32px;
+    }
+
+    .p-amount {
+      font-family: var(--ff-head);
+      font-size: 60px;
+      line-height: 1;
+      color: var(--accent);
+    }
+
+    .pricing-card.featured .p-amount { color: var(--black); }
+
+    .p-curr {
+      font-size: 22px;
+      font-family: var(--ff-head);
+      color: var(--muted);
+    }
+
+    .pricing-card.featured .p-curr { color: rgba(10,10,10,0.45); }
+
+    .pricing-features {
+      list-style: none;
+      margin-bottom: 36px;
+    }
+
+    .pricing-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.75);
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .pricing-card.featured .pricing-features li {
+      color: rgba(10,10,10,0.8);
+      border-bottom-color: rgba(10,10,10,0.12);
+    }
+
+    .feat-check {
+      width: 18px; height: 18px;
+      background: rgba(200,241,53,0.15);
+      border-radius: 2px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pricing-card.featured .feat-check {
+      background: rgba(10,10,10,0.15);
+    }
+
+    .feat-check svg { width: 11px; height: 11px; stroke: var(--accent); stroke-width: 2.5; fill: none; }
+    .pricing-card.featured .feat-check svg { stroke: var(--black); }
+
+    .pricing-btn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background: var(--black);
+      color: var(--accent);
+      border: none;
+      border-radius: 3px;
+      font-family: var(--ff-head);
+      font-size: 19px;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .pricing-btn:hover { background: rgba(10,10,10,0.85); }
+
+    .pricing-card:not(.featured) .pricing-btn {
+      background: rgba(200,241,53,0.1);
+      color: var(--accent);
+    }
+
+    .pricing-card:not(.featured) .pricing-btn:hover {
+      background: var(--accent);
+      color: var(--black);
+    }
+
+    /* ===== CTA BANNER ===== */
+    .cta-banner {
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .cta-bg img {
+      height: 100%;
+      object-position: center 30%;
+      filter: grayscale(30%);
+    }
+
+    .cta-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        rgba(10,10,10,0.97) 0%,
+        rgba(10,10,10,0.85) 60%,
+        rgba(10,10,10,0.5) 100%
+      );
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 1;
+      padding: 120px 0;
+      max-width: 680px;
+    }
+
+    .cta-title {
+      font-family: var(--ff-head);
+      font-size: clamp(56px, 8vw, 100px);
+      line-height: 0.92;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .cta-title .hl { color: var(--accent); }
+
+    .cta-desc {
+      font-size: 18px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+      margin-bottom: 44px;
+      max-width: 480px;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .cta-note {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ===== CONTACT ===== */
+    .contact {
+      padding: 120px 0 80px;
+      background: var(--black2);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      margin-top: 64px;
+    }
+
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+    }
+
+    .contact-info-item {
+      margin-bottom: 32px;
+    }
+
+    .ci-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .ci-value {
+      font-family: var(--ff-head);
+      font-size: 26px;
+      letter-spacing: 0.04em;
+      color: var(--white);
+    }
+
+    .ci-sub {
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .map-placeholder {
+      width: 100%;
+      height: 240px;
+      background: var(--gray);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 32px;
+    }
+
+    .map-placeholder img {
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.5;
+    }
+
+    /* Contact form */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+
+    .form-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      background: var(--gray2);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 3px;
+      padding: 14px 16px;
+      font-family: var(--ff-body);
+      font-size: 15px;
+      color: var(--white);
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder { color: rgba(255,255,255,0.25); }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus { border-color: var(--accent); }
+
+    .form-select { cursor: pointer; appearance: none; }
+    .form-select option { background: #1a1a1a; }
+
+    .form-textarea { resize: vertical; min-height: 120px; }
+
+    .form-submit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--accent);
+      color: var(--black);
+      border: none;
+      border-radius: 3px;
+      padding: 17px 36px;
+      font-family: var(--ff-head);
+      font-size: 20px;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      width: 100%;
+    }
+
+    .form-submit:hover { background: #d8ff45; transform: translateY(-2px); }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--black);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 48px 0 32px;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .footer-logo {
+      font-family: var(--ff-head);
+      font-size: 36px;
+      letter-spacing: 0.08em;
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    .footer-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--accent); }
+
+    .footer-copy {
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+      color: rgba(255,255,255,0.2);
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* ===== FLOATING TELEGRAM BUTTON ===== */
+    .tg-float {
+      position: fixed;
+      bottom: 32px;
+      right: 28px;
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent);
+      color: var(--black);
+      padding: 14px 22px 14px 18px;
+      border-radius: 50px;
+      font-family: var(--ff-head);
+      font-size: 18px;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      box-shadow: 0 4px 32px rgba(200,241,53,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .tg-float:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 8px 40px rgba(200,241,53,0.5);
+    }
+
+    .tg-float svg { width: 22px; height: 22px; flex-shrink: 0; }
+
+    @media (max-width: 480px) {
+      .tg-float span { display: none; }
+      .tg-float { padding: 15px; border-radius: 50%; }
+    }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.3;
+    }
+
+    /* ===== SCROLL REVEAL helper (CSS-only fade-in via @starting-style where supported) ===== */
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal {
+        opacity: 0;
+        transform: translateY(32px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+      /* We use :target or a checkbox hack — but since we want NO JS,
+         let's use the simpler approach: animate on page load with stagger via animation-delay */
+      .reveal { animation: fadeUp 0.7s ease forwards; }
+      .reveal-d1 { animation-delay: 0.1s; }
+      .reveal-d2 { animation-delay: 0.2s; }
+      .reveal-d3 { animation-delay: 0.3s; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ============================
+       NAVBAR
+       ============================ -->
+  <header class="navbar" role="banner">
+    <div class="container navbar-inner">
+      <a class="logo" href="#hero" aria-label="APEX — повернутись на початок">APE<span>X</span></a>
+      <nav aria-label="Основна навігація">
+        <ul class="nav-links">
+          <li><a href="#services">Послуги</a></li>
+          <li><a href="#schedule">Розклад</a></li>
+          <li><a href="#coaches">Тренери</a></li>
+          <li><a href="#pricing">Ціни</a></li>
+          <li><a href="#contact">Контакти</a></li>
+        </ul>
+      </nav>
+      <a class="nav-cta" href="https://t.me/apex_fit_kyiv" target="_blank" rel="noopener" aria-label="Записатись через Telegram">Записатись</a>
+    </div>
+  </header>
+
+  <!-- ============================
+       HERO
+       ============================ -->
+  <section id="hero" class="hero" aria-label="Головний банер">
+    <div class="hero-bg" aria-hidden="true">
+      <img
+        src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1800&q=80"
+        alt=""
+        loading="eager"
+      />
+    </div>
+
+    <div class="container">
+      <div class="hero-content">
+
+        <div class="hero-tag">
+          <span class="hero-dot" aria-hidden="true"></span>
+          Відкриті набір на серпень
+        </div>
+
+        <h1 class="hero-title">
+          ЗНАЙДИ<br/>
+          <span class="accent">МЕЖУ</span><br/>
+          СВОГО ТІЛА
+        </h1>
+        <p class="hero-subtitle">CrossFit · Yoga · Stretching</p>
+        <p class="hero-desc">
+          APEX — це не просто зал. Це середовище, де зростають чемпіони.
+          Тренуйся з тренерами, які знають, як витиснути максимум.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-accent" href="https://t.me/apex_fit_kyiv" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-2.04 9.613c-.15.685-.546.852-1.107.53l-3.067-2.26-1.48 1.423c-.164.164-.3.3-.617.3l.22-3.118 5.674-5.125c.247-.22-.054-.342-.382-.122L7.03 14.66 4.01 13.733c-.672-.21-.685-.672.14-.993l10.913-4.207c.56-.2 1.05.138.87.996-.033.158-.033.158-.37 1.72z"/>
+            </svg>
+            Перший урок безкоштовно
+          </a>
+          <a class="btn btn-outline" href="#services">Всі програми</a>
+        </div>
+
+        <div class="hero-stats" aria-label="Показники студії">
+          <div class="stat-item">
+            <div class="stat-num">6+</div>
+            <div class="stat-label">Років роботи</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">800+</div>
+            <div class="stat-label">Активних членів</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">12</div>
+            <div class="stat-label">Тренерів</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">30+</div>
+            <div class="stat-label">Занять на тиждень</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================
+       TICKER
+       ============================ -->
+  <div class="ticker-wrap" aria-hidden="true">
+    <div class="ticker-track">
+      <!-- First copy -->
+      <span class="ticker-item">CROSSFIT</span><span class="ticker-sep">✦</span>
+      <span class="ticker-item">YOGA</span><span class="ticker-sep">✦</span>
+      <span class="ticker-item">STRETCHING</span><span class="ticker-sep">✦</span>
+      <span class="ticker-item">PERSONAL TRAINING</span><span class="ticker-sep">✦</span>
+      <span class="ticker-item">APEX FITNESS</span><span class="ticker-sep">✦</span>
+      <span class="ticker-item">ДОСЯГАЙ БІЛЬШОГО</span><span class="ticker-sep">✦</span>
+      <span class="ticker-item">ЗАПИСУЙСЯ ЗАРАЗ</span><span class="ticker-sep">✦</span>
+      <!-- Second copy for seamless loop -->
+      <span class="ticker-item">CROSSFIT</span><span class="ticker-sep">✦</span>
+      <span class="ticker-item">YOGA</span><span class="ticker-sep">✦</span>
+      <span class="ticker-item">STRETCHING</span><span class="ticker-sep">✦</span>
+      <span class="ticker-item">PERSONAL TRAINING</span><span class="ticker-sep">✦</span>
+      <span class="ticker-item">APEX FITNESS</span><span class="ticker-sep">✦</span>
+      <span class="ticker-item">ДОСЯГАЙ БІЛЬШОГО</span><span class="ticker-sep">✦</span>
+      <span class="ticker-item">ЗАПИСУЙСЯ ЗАРАЗ</span><span class="ticker-sep">✦</span>
+    </div>
+  </div>
+
+  <!-- ============================
+       SERVICES
+       ============================ -->
+  <section id="services" class="services" aria-label="Наші послуги">
+    <div class="container">
+      <div class="section-head">
+        <p class="section-label">Програми тренувань</p>
+        <h2 class="section-title">
+          ЩО МИ<br/>
+          <span class="dim">ПРОПОНУЄМО</span>
+        </h2>
+      </div>
+
+      <div class="services-grid" role="list">
+
+        <!-- CrossFit -->
+        <article class="service-card" role="listitem">
+          <div class="service-img">
+            <img
+              src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=75"
+              alt="CrossFit тренування — люди виконують вправи з гантелями"
+              loading="lazy"
+            />
+          </div>
+          <div class="service-body">
+            <div class="service-num">01 /</div>
+            <h3 class="service-name">CrossFit</h3>
+            <p class="service-desc">Функціональні тренування високої інтенсивності для розвитку сили, витривалості та швидкості. WOD кожного дня — ніколи не нудно.</p>
+            <div class="service-price">
+              <span class="price-val">400</span>
+              <span class="price-unit">грн / заняття</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Yoga -->
+        <article class="service-card" role="listitem">
+          <div class="service-img">
+            <img
+              src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=600&q=75"
+              alt="Yoga заняття — людина у позі дерева"
+              loading="lazy"
+            />
+          </div>
+          <div class="service-body">
+            <div class="service-num">02 /</div>
+            <h3 class="service-name">Yoga</h3>
+            <p class="service-desc">Баланс тіла та розуму. Від Hatha до Vinyasa flow — знайди стиль, який підходить саме тобі. Групи для початківців та досвідчених.</p>
+            <div class="service-price">
+              <span class="price-val">350</span>
+              <span class="price-unit">грн / заняття</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Stretching -->
+        <article class="service-card" role="listitem">
+          <div class="service-img">
+            <img
+              src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=75"
+              alt="Stretching — людина виконує розтяжку"
+              loading="lazy"
+            />
+          </div>
+          <div class="service-body">
+            <div class="service-num">03 /</div>
+            <h3 class="service-name">Stretching</h3>
+            <p class="service-desc">Гнучкість — основа всього. Покращи рухливість суглобів, знизь ризик травм, відчуй легкість у кожному русі після перших занять.</p>
+            <div class="service-price">
+              <span class="price-val">300</span>
+              <span class="price-unit">грн / заняття</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Personal Training -->
+        <article class="service-card" role="listitem">
+          <div class="service-img">
+            <img
+              src="https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=600&q=75"
+              alt="Персональне тренування — тренер допомагає спортсмену"
+              loading="lazy"
+            />
+          </div>
+          <div class="service-body">
+            <div class="service-num">04 /</div>
+            <h3 class="service-name">Personal Training</h3>
+            <p class="service-desc">Індивідуальна програма під твої цілі. Контроль техніки, харчові рекомендації, 100% уваги тренера. Результат гарантований.</p>
+            <div class="service-price">
+              <span class="price-val">800</span>
+              <span class="price-unit">грн / заняття</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" aria-hidden="true"></div>
+
+  <!-- ============================
+       SCHEDULE
+       ============================ -->
+  <section id="schedule" class="schedule" aria-label="Розклад занять">
+    <div class="container">
+      <div class="section-head">
+        <p class="section-label">Тижневий розклад</p>
+        <h2 class="section-title">
+          КОЛИ<br/>
+          <span class="dim">ТРЕНУЄМОСЬ</span>
+        </h2>
+      </div>
+
+      <div class="schedule-table-wrap">
+        <table class="schedule-table" role="table" aria-label="Розклад занять на тиждень">
+          <thead>
+            <tr>
+              <th scope="col">Час</th>
+              <th scope="col">Пн</th>
+              <th scope="col">Вт</th>
+              <th scope="col">Ср</th>
+              <th scope="col">Чт</th>
+              <th scope="col">Пт</th>
+              <th scope="col">Сб</th>
+              <th scope="col">Нд</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>07:00</td>
+              <td><span class="class-pill pill-crossfit">CrossFit</span></td>
+              <td><span class="class-pill pill-yoga">Yoga</span></td>
+              <td><span class="class-pill pill-crossfit">CrossFit</span></td>
+              <td><span class="class-pill pill-yoga">Yoga</span></td>
+              <td><span class="class-pill pill-crossfit">CrossFit</span></td>
+              <td><span class="class-pill pill-crossfit">CrossFit</span></td>
+              <td><span class="class-pill pill-rest">—</span></td>
+            </tr>
+            <tr>
+              <td>09:00</td>
+              <td><span class="class-pill pill-yoga">Yoga</span></td>
+              <td><span class="class-pill pill-stretch">Stretching</span></td>
+              <td><span class="class-pill pill-yoga">Yoga</span></td>
+              <td><span class="class-pill pill-stretch">Stretching</span></td>
+              <td><span class="class-pill pill-yoga">Yoga</span></td>
+              <td><span class="class-pill pill-yoga">Yoga</span></td>
+              <td><span class="class-pill pill-yoga">Yoga</span></td>
+            </tr>
+            <tr>
+              <td>11:00</td>
+              <td><span class="class-pill pill-stretch">Stretching</span></td>
+              <td><span class="class-pill pill-crossfit">CrossFit</span></td>
+              <td><span class="class-pill pill-stretch">Stretching</span></td>
+              <td><span class="class-pill pill-crossfit">CrossFit</span></td>
+              <td><span class="class-pill pill-stretch">Stretching</span></td>
+              <td><span class="class-pill pill-pt">Personal</span></td>
+              <td><span class="class-pill pill-stretch">Stretching</span></td>
+            </tr>
+            <tr>
+              <td>17:00</td>
+              <td><span class="class-pill pill-crossfit">CrossFit</span></td>
+              <td><span class="class-pill pill-pt">Personal</span></td>
+              <td><span class="class-pill pill-crossfit">CrossFit</span></td>
+              <td><span class="class-pill pill-pt">Personal</span></td>
+              <td><span class="class-pill pill-crossfit">CrossFit</span></td>
+              <td><span class="class-pill pill-stretch">Stretching</span></td>
+              <td><span class="class-pill pill-rest">—</span></td>
+            </tr>
+            <tr>
+              <td>19:00</td>
+              <td><span class="class-pill pill-yoga">Yoga</span></td>
+              <td><span class="class-pill pill-crossfit">CrossFit</span></td>
+              <td><span class="class-pill pill-yoga">Yoga</span></td>
+              <td><span class="class-pill pill-crossfit">CrossFit</span></td>
+              <td><span class="class-pill pill-yoga">Yoga</span></td>
+              <td><span class="class-pill pill-rest">—</span></td>
+              <td><span class="class-pill pill-rest">—</span></td>
+            </tr>
+            <tr>
+              <td>21:00</td>
+              <td><span class="class-pill pill-stretch">Stretching</span></td>
+              <td><span class="class-pill pill-yoga">Yoga</span></td>
+              <td><span class="class-pill pill-crossfit">CrossFit</span></td>
+              <td><span class="class-pill pill-yoga">Yoga</span></td>
+              <td><span class="class-pill pill-stretch">Stretching</span></td>
+              <td><span class="class-pill pill-rest">—</span></td>
+              <td><span class="class-pill pill-rest">—</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Legend -->
+      <div style="display:flex; flex-wrap:wrap; gap:16px; margin-top:24px; align-items:center;">
+        <span style="font-size:12px; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; margin-right:4px;">Легенда:</span>
+        <span class="class-pill pill-crossfit">CrossFit</span>
+        <span class="class-pill pill-yoga">Yoga</span>
+        <span class="class-pill pill-stretch">Stretching</span>
+        <span class="class-pill pill-pt">Personal Training</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================
+       COACHES
+       ============================ -->
+  <section id="coaches" class="coaches" aria-label="Наші тренери">
+    <div class="container">
+      <div class="section-head">
+        <p class="section-label">Команда</p>
+        <h2 class="section-title">
+          ТВОЇ<br/>
+          <span class="dim">ТРЕНЕРИ</span>
+        </h2>
+      </div>
+
+      <div class="coaches-grid" role="list">
+
+        <article class="coach-card" role="listitem">
+          <div class="coach-photo">
+            <img
+              src="https://images.unsplash.com/photo-1534367610401-9f5ed68180aa?w=600&q=75"
+              alt="Олексій Коваль — тренер CrossFit"
+              loading="lazy"
+            />
+          </div>
+          <div class="coach-overlay">
+            <div class="coach-tag">CrossFit · 8 років</div>
+            <h3 class="coach-name">Олексій Коваль</h3>
+            <p class="coach-bio">Майстер спорту з важкої атлетики. CF-L2 Certified. Чемпіон регіональних змагань 2019–2022. Веде ранкові WOD та персональні тренування.</p>
+          </div>
+        </article>
+
+        <article class="coach-card" role="listitem">
+          <div class="coach-photo">
+            <img
+              src="https://images.unsplash.com/photo-1607962837359-5e7e89f86776?w=600&q=75"
+              alt="Марія Дяченко — тренер з йоги"
+              loading="lazy"
+            />
+          </div>
+          <div class="coach-overlay">
+            <div class="coach-tag">Yoga · Stretching · 6 років</div>
+            <h3 class="coach-name">Марія Дяченко</h3>
+            <p class="coach-bio">Сертифікований RYT-500 інструктор. Спеціалізація — Vinyasa та Yin Yoga. Веде курс відновлення після травм. Також — глибокий stretching.</p>
+          </div>
+        </article>
+
+        <article class="coach-card" role="listitem">
+          <div class="coach-photo">
+            <img
+              src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&q=75"
+              alt="Денис Романенко — персональний тренер"
+              loading="lazy"
+            />
+          </div>
+          <div class="coach-overlay">
+            <div class="coach-tag">Personal Training · 10 років</div>
+            <h3 class="coach-name">Денис Романенко</h3>
+            <p class="coach-bio">Колишній військовий, нині фітнес-терапевт. Спеціалізація — трансформація тіла та функціональна реабілітація. 200+ успішних клієнтів.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================
+       PRICING
+       ============================ -->
+  <section id="pricing" class="pricing" aria-label="Тарифні пакети">
+    <div class="container">
+      <div class="section-head">
+        <p class="section-label">Абонементи</p>
+        <h2 class="section-title">
+          ОБЕРИ<br/>
+          <span class="dim">СВІЙ ПЛАН</span>
+        </h2>
+      </div>
+
+      <div class="pricing-grid" role="list">
+
+        <!-- 8 занять -->
+        <article class="pricing-card" role="listitem">
+          <div class="pricing-badge">Старт</div>
+          <h3 class="pricing-name">8 ЗАНЯТЬ</h3>
+          <p class="pricing-sub">Ідеально для знайомства</p>
+          <div class="pricing-price">
+            <span class="p-amount">2800</span>
+            <span class="p-curr">грн</span>
+          </div>
+          <ul class="pricing-features" aria-label="Що включено">
+            <li>
+              <span class="feat-check" aria-hidden="true">
+                <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+              </span>
+              8 занять на вибір (30 днів)
+            </li>
+            <li>
+              <span class="feat-check" aria-hidden="true">
+                <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+              </span>
+              Будь-який напрямок
+            </li>
+            <li>
+              <span class="feat-check" aria-hidden="true">
+                <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+              </span>
+              Вступна консультація
+            </li>
+            <li>
+              <span class="feat-check" aria-hidden="true">
+                <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+              </span>
+              Доступ до роздягальні та душу
+            </li>
+          </ul>
+          <a class="pricing-btn" href="https://t.me/apex_fit_kyiv" target="_blank" rel="noopener" aria-label="Купити абонемент 8 занять">Обрати план</a>
+        </article>
+
+        <!-- 12 занять — Featured -->
+        <article class="pricing-card featured" role="listitem">
+          <div class="pricing-badge">Популярний</div>
+          <h3 class="pricing-name">12 ЗАНЯТЬ</h3>
+          <p class="pricing-sub">Найкращий вибір для прогресу</p>
+          <div class="pricing-price">
+            <span class="p-amount">3900</span>
+            <span class="p-curr">грн</span>
+          </div>
+          <ul class="pricing-features" aria-label="Що включено">
+            <li>
+              <span class="feat-check" aria-hidden="true">
+                <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+              </span>
+              12 занять (45 днів)
+            </li>
+            <li>
+              <span class="feat-check" aria-hidden="true">
+                <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+              </span>
+              Будь-який напрямок + змішування
+            </li>
+            <li>
+              <span class="feat-check" aria-hidden="true">
+                <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+              </span>
+              Безкоштовне заморожування (1 раз)
+            </li>
+            <li>
+              <span class="feat-check" aria-hidden="true">
+                <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+              </span>
+              Персональний план харчування
+            </li>
+            <li>
+              <span class="feat-check" aria-hidden="true">
+                <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+              </span>
+              Пріоритетний запис на групи
+            </li>
+          </ul>
+          <a class="pricing-btn" href="https://t.me/apex_fit_kyiv" target="_blank" rel="noopener" aria-label="Купити абонемент 12 занять">Обрати план</a>
+        </article>
+
+        <!-- Безлімітний -->
+        <article class="pricing-card" role="listitem">
+          <div class="pricing-badge">Безліміт</div>
+          <h3 class="pricing-name">МІСЯЦЬ</h3>
+          <p class="pricing-sub">Необмежений доступ 30 днів</p>
+          <div class="pricing-price">
+            <span class="p-amount">5500</span>
+            <span class="p-curr">грн</span>
+          </div>
+          <ul class="pricing-features" aria-label="Що включено">
+            <li>
+              <span class="feat-check" aria-hidden="true">
+                <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+              </span>
+              Необмежені заняття 30 днів
+            </li>
+            <li>
+              <span class="feat-check" aria-hidden="true">
+                <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+              </span>
+              Всі напрямки та формати
+            </li>
+            <li>
+              <span class="feat-check" aria-hidden="true">
+                <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+              </span>
+              1 персональне тренування в місяць
+            </li>
+            <li>
+              <span class="feat-check" aria-hidden="true">
+                <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+              </span>
+              Заморожування до 10 днів
+            </li>
+            <li>
+              <span class="feat-check" aria-hidden="true">
+                <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+              </span>
+              Безкоштовна гостьова перепустка
+            </li>
+          </ul>
+          <a class="pricing-btn" href="https://t.me/apex_fit_kyiv" target="_blank" rel="noopener" aria-label="Купити безлімітний місяць">Обрати план</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================
+       CTA BANNER
+       ============================ -->
+  <section class="cta-banner" aria-label="Запис на перший урок">
+    <div class="cta-bg" aria-hidden="true">
+      <img
+        src="https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=1600&q=80"
+        alt=""
+        loading="lazy"
+      />
+    </div>
+    <div class="container">
+      <div class="cta-content">
+        <p class="section-label">Починай зараз</p>
+        <h2 class="cta-title">
+          ПЕРШИЙ<br/>
+          УРОК<br/>
+          <span class="hl">БЕЗКОШТОВНО</span>
+        </h2>
+        <p class="cta-desc">
+          Не потрібна підготовка, досвід або особливе спорядження.
+          Просто напиши нам — і вже завтра починай змінюватись.
+        </p>
+        <div class="cta-actions">
+          <a class="btn btn-accent" href="https://t.me/apex_fit_kyiv" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-2.04 9.613c-.15.685-.546.852-1.107.53l-3.067-2.26-1.48 1.423c-.164.164-.3.3-.617.3l.22-3.118 5.674-5.125c.247-.22-.054-.342-.382-.122L7.03 14.66 4.01 13.733c-.672-.21-.685-.672.14-.993l10.913-4.207c.56-.2 1.05.138.87.996-.033.158-.033.158-.37 1.72z"/>
+            </svg>
+            Записатись у Telegram
+          </a>
+          <span class="cta-note">Відповідаємо протягом 5 хвилин</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================
+       CONTACT
+       ============================ -->
+  <section id="contact" class="contact" aria-label="Контакти та запис">
+    <div class="container">
+      <div class="section-head">
+        <p class="section-label">Зв'яжіться з нами</p>
+        <h2 class="section-title">
+          КОНТАКТИ<br/>
+          <span class="dim">ТА ЗАПИС</span>
+        </h2>
+      </div>
+
+      <div class="contact-grid">
+        <!-- Info -->
+        <div>
+          <div class="contact-info-item">
+            <div class="ci-label">Адреса</div>
+            <div class="ci-value">вул. Спортивна, 14А</div>
+            <div class="ci-sub">Київ, 02000 (м. Олімпійська, 5 хв пішки)</div>
+          </div>
+          <div class="contact-info-item">
+            <div class="ci-label">Телефон</div>
+            <a class="ci-value" href="tel:+380441234567" style="cursor:pointer; transition:color 0.2s;" onmouseover="this.style.color='#c8f135'" onmouseout="this.style.color=''">+38 (044) 123-45-67</a>
+          </div>
+          <div class="contact-info-item">
+            <div class="ci-label">Email</div>
+            <a class="ci-value" href="mailto:hello@apex.fitness" style="cursor:pointer; font-size:20px; transition:color 0.2s;" onmouseover="this.style.color='#c8f135'" onmouseout="this.style.color=''">hello@apex.fitness</a>
+          </div>
+          <div class="contact-info-item">
+            <div class="ci-label">Графік роботи</div>
+            <div class="ci-value" style="font-size:22px;">Пн–Пт: 06:30–22:30</div>
+            <div class="ci-sub">Сб–Нд: 08:00–20:00</div>
+          </div>
+
+          <div class="map-placeholder" aria-label="Карта розташування студії">
+            <img
+              src="https://images.unsplash.com/photo-1524813686514-a57563d77965?w=800&q=60"
+              alt="Вид вулиці поруч зі студією APEX"
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div>
+          <p class="section-label" style="margin-bottom:24px;">Залиш заявку — ми передзвонимо</p>
+          <form class="contact-form" action="https://t.me/apex_fit_kyiv" method="GET" target="_blank" rel="noopener" aria-label="Форма запису на пробне заняття">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="name">Ім'я</label>
+                <input class="form-input" type="text" id="name" name="name" placeholder="Як тебе звати?" autocomplete="given-name" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="phone">Телефон</label>
+                <input class="form-input" type="tel" id="phone" name="phone" placeholder="+38 (0__) ___-__-__" autocomplete="tel" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="service">Напрямок</label>
+              <select class="form-select" id="service" name="service">
+                <option value="" disabled selected>Обери напрямок</option>
+                <option value="crossfit">CrossFit</option>
+                <option value="yoga">Yoga</option>
+                <option value="stretching">Stretching</option>
+                <option value="personal">Personal Training</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="message">Коментар</label>
+              <textarea class="form-textarea" id="message" name="message" placeholder="Рівень підготовки, запитання, побажання..."></textarea>
+            </div>
+            <button type="submit" class="form-submit">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-2.04 9.613c-.15.685-.546.852-1.107.53l-3.067-2.26-1.48 1.423c-.164.164-.3.3-.617.3l.22-3.118 5.674-5.125c.247-.22-.054-.342-.382-.122L7.03 14.66 4.01 13.733c-.672-.21-.685-.672.14-.993l10.913-4.207c.56-.2 1.05.138.87.996-.033.158-.033.158-.37 1.72z"/>
+              </svg>
+              Надіслати заявку
+            </button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================
+       FOOTER
+       ============================ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">APE<span>X</span></div>
+        <nav aria-label="Навігація у підвалі">
+          <ul class="footer-links">
+            <li><a href="#services">Послуги</a></li>
+            <li><a href="#schedule">Розклад</a></li>
+            <li><a href="#pricing">Ціни</a></li>
+            <li><a href="#contact">Контакти</a></li>
+            <li><a href="https://t.me/apex_fit_kyiv" target="_blank" rel="noopener">Telegram</a></li>
+          </ul>
+        </nav>
+      </div>
+      <p class="footer-copy">© 2024 APEX Fitness Studio. Всі права захищені.</p>
+    </div>
+  </footer>
+
+  <!-- ============================
+       FLOATING TELEGRAM BUTTON
+       ============================ -->
+  <a
+    class="tg-float"
+    href="https://t.me/apex_fit_kyiv"
+    target="_blank"
+    rel="noopener"
+    aria-label="Записатись на заняття через Telegram"
+  >
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-2.04 9.613c-.15.685-.546.852-1.107.53l-3.067-2.26-1.48 1.423c-.164.164-.3.3-.617.3l.22-3.118 5.674-5.125c.247-.22-.054-.342-.382-.122L7.03 14.66 4.01 13.733c-.672-.21-.685-.672.14-.993l10.913-4.207c.56-.2 1.05.138.87.996-.033.158-.033.158-.37 1.72z"/>
+    </svg>
+    <span>Записатись</span>
+  </a>
+
+</body>
+</html>
