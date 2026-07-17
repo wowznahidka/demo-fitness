@@ -166,6 +166,15 @@
       object-position: center top;
     }
 
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+    }
+
     .hero-bg::after {
       content: '';
       position: absolute;
@@ -223,6 +232,15 @@
     }
 
     .hero-title .accent { color: var(--accent); }
+
+    .hero-note {
+      font-size: 14px;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      margin-top: -8px;
+      margin-bottom: 20px;
+    }
 
     .hero-subtitle {
       font-family: var(--ff-head);
@@ -539,6 +557,55 @@
       font-size: 13px;
       color: rgba(255,255,255,0.65);
       line-height: 1.6;
+    }
+
+    /* ===== REVIEWS ===== */
+    .reviews {
+      padding: 120px 0;
+      background: var(--black2);
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 64px;
+    }
+
+    .review-card {
+      background: var(--gray2);
+      border-radius: 4px;
+      padding: 32px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .review-stars {
+      color: var(--accent);
+      font-size: 15px;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
+    .review-text {
+      font-size: 15px;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .review-name {
+      font-family: var(--ff-head);
+      font-size: 18px;
+      letter-spacing: 0.03em;
+      color: var(--white);
+    }
+
+    .review-meta {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 2px;
     }
 
     /* ===== PRICING ===== */
@@ -1061,6 +1128,13 @@
         alt=""
         loading="eager"
       />
+      <video
+        class="hero-video"
+        autoplay muted loop playsinline preload="metadata"
+        poster="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1800&q=80"
+      >
+        <source src="https://videos.pexels.com/video-files/6390154/6390154-hd_1280_720_25fps.mp4" type="video/mp4">
+      </video>
     </div>
 
     <div class="container">
@@ -1068,7 +1142,7 @@
 
         <div class="hero-tag">
           <span class="hero-dot" aria-hidden="true"></span>
-          Відкриті набір на серпень
+          Відкритий набір на серпень
         </div>
 
         <h1 class="hero-title">
@@ -1081,6 +1155,7 @@
           APEX — це не просто зал. Це середовище, де зростають чемпіони.
           Тренуйся з тренерами, які знають, як витиснути максимум.
         </p>
+        <p class="hero-note">Від жорсткого кросфіту до відновлювальної йоги — рівень під тебе.</p>
 
         <div class="hero-actions">
           <a class="btn btn-accent" href="https://telegram.me/znahidkawow" target="_blank" rel="noopener">
@@ -1108,6 +1183,10 @@
           <div class="stat-item">
             <div class="stat-num">30+</div>
             <div class="stat-label">Занять на тиждень</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">4.9★</div>
+            <div class="stat-label">Рейтинг клієнтів</div>
           </div>
         </div>
 
@@ -1409,6 +1488,48 @@
   </section>
 
   <!-- ============================
+       REVIEWS
+       ============================ -->
+  <section id="reviews" class="reviews" aria-label="Відгуки клієнтів">
+    <div class="container">
+      <div class="section-head">
+        <p class="section-label">Відгуки</p>
+        <h2 class="section-title">
+          ЩО КАЖУТЬ<br/>
+          <span class="dim">НАШІ ЧЛЕНИ</span>
+        </h2>
+      </div>
+
+      <div class="reviews-grid" role="list">
+        <div class="review-card" role="listitem">
+          <div class="review-stars" aria-label="5 з 5 зірок">★★★★★</div>
+          <p class="review-text">Прийшов на CrossFit, залишився заради атмосфери. Тренери завжди слідкують за технікою і не дають розслабитись.</p>
+          <div class="review-name">Ігор Савченко</div>
+          <div class="review-meta">Учасник, 1 рік</div>
+        </div>
+        <div class="review-card" role="listitem">
+          <div class="review-stars" aria-label="5 з 5 зірок">★★★★★</div>
+          <p class="review-text">Ходжу на йогу до Марії вже пів року — після травми коліна це єдине місце, де тренуються обережно, але результативно.</p>
+          <div class="review-name">Софія Мельник</div>
+          <div class="review-meta">Учасниця, 6 місяців</div>
+        </div>
+        <div class="review-card" role="listitem">
+          <div class="review-stars" aria-label="5 з 5 зірок">★★★★★</div>
+          <p class="review-text">Персональні тренування з Денисом змінили моє тіло за три місяці більше, ніж рік самостійних спроб. Рекомендую всім.</p>
+          <div class="review-name">Артем Бойко</div>
+          <div class="review-meta">Учасник, 8 місяців</div>
+        </div>
+        <div class="review-card" role="listitem">
+          <div class="review-stars" aria-label="5 з 5 зірок">★★★★★</div>
+          <p class="review-text">Зручний розклад, чисті роздягальні, завжди є вільне обладнання. З 12 тренерів кожен знайде собі свій формат.</p>
+          <div class="review-name">Юлія Ткаченко</div>
+          <div class="review-meta">Учасниця, 2 роки</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================
        PRICING
        ============================ -->
   <section id="pricing" class="pricing" aria-label="Тарифні пакети">
@@ -1612,7 +1733,7 @@
           </div>
           <div class="contact-info-item">
             <div class="ci-label">Телефон</div>
-            <a class="ci-value" href="tel:+380441234567" style="cursor:pointer; transition:color 0.2s;" onmouseover="this.style.color='#c8f135'" onmouseout="this.style.color=''">+38 (044) 123-45-67</a>
+            <a class="ci-value" href="tel:+380445879214" style="cursor:pointer; transition:color 0.2s;" onmouseover="this.style.color='#c8f135'" onmouseout="this.style.color=''">+38 (044) 587-92-14</a>
           </div>
           <div class="contact-info-item">
             <div class="ci-label">Email</div>
